@@ -359,7 +359,12 @@ Store.prototype.commentsPaging = function (request) {
 };
 
 Store.prototype.subscriptionSpace = function (type) {
-    return this.userSpace + SUBSCRIPTIONS_PATH + (type ? '/' + type : '');
+    // return the subscription space if user space defines only.
+    var userSpaceValue = this.userSpace;
+    if (typeof userSpaceValue !== 'undefined') {
+        return userSpaceValue + SUBSCRIPTIONS_PATH + (type ? '/' + type : '');
+    }
+    return null;
 };
 
 Store.prototype.subscribe = function (type, id) {
@@ -453,9 +458,11 @@ Store.prototype.searchSubscriptions = function (type, searchAttribute, searchVal
 };
 
 Store.prototype.isSubscribed = function (type, id) {
-    var path = this.subscriptionSpace(type) + '/' + id;
-    if (this.registry.exists(path)) {
-        return true;
+    if(this.subscriptionSpace(type)) {
+        var path = this.subscriptionSpace(type) + '/' + id;
+        if (this.registry.exists(path)) {
+            return true;
+        }
     }
     return false;
 };
