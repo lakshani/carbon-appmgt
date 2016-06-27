@@ -364,7 +364,6 @@ Store.prototype.subscriptionSpace = function (type) {
     if (typeof userSpaceValue !== 'undefined') {
         return userSpaceValue + SUBSCRIPTIONS_PATH + (type ? '/' + type : '');
     }
-    return null;
 };
 
 Store.prototype.subscribe = function (type, id) {
