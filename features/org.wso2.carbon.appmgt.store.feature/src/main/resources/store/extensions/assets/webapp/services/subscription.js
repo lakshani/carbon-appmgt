@@ -82,6 +82,8 @@ var serviceModule = (function () {
 
     Subscriber.prototype.getSubscription = function(appInfo, appName, subscriptionType, user){
         var result = this.instance.getAPISubscription(appInfo, appName, subscriptionType, user);
+        var logg= new Log();
+        logg.info(">>>>>>>>result>>>>>"+ result);
         return result;
     }
 

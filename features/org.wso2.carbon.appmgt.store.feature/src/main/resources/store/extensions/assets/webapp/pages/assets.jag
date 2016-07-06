@@ -91,8 +91,12 @@ require('/modules/store.js').exec(function (ctx) {
             httpsPort = process.getProperty('https.port');
 
 
+    var log2 = new Log();
+
 
     var isSelfSignupEnabledForTenant = storeHostObj.isSelfSignupEnabledForTenant(String(tenantDomain));
+
+    log2.info("<<<<<<<<<<<<<<<<< " +isSelfSignupEnabledForTenant);
 
     var isSite = 'false';//To get the webapp tags
     var context = caramel.configs().context;
@@ -142,7 +146,6 @@ require('/modules/store.js').exec(function (ctx) {
     subscriptionService.init(jagg, session);
 
     var getSubscriptionInfo = function (asset) {
-
         // Get the enterprise subscription the individual subscription for this user for this app.
         var appInfo = {};
         appInfo["name"] = asset.attributes.overview_name;
@@ -150,7 +153,7 @@ require('/modules/store.js').exec(function (ctx) {
         appInfo["provider"] = asset.attributes.overview_provider;
 
         var defaultApplicationName = "DefaultApplication";
-
+log2.info("wssssssssssssss" + authenticator.getLoggedInUser());
         var enterpriseSubscription;
         if (authenticator.getLoggedInUser()) {
             enterpriseSubscription = subscriptionService.getSubscription(appInfo, defaultApplicationName, "ENTERPRISE", authenticator.getLoggedInUser().username).subscription;
@@ -158,6 +161,7 @@ require('/modules/store.js').exec(function (ctx) {
         else {
             enterpriseSubscription = subscriptionService.getSubscription(appInfo, defaultApplicationName, "ENTERPRISE", null).subscription;
         }
+        log2.info("dwdwdw");
 
         var individualSubscription;
         if (authenticator.getLoggedInUser()) {
@@ -422,6 +426,7 @@ require('/modules/store.js').exec(function (ctx) {
     var recentAssets = store.recentAssets(type, RECENT_ASSET_COUNT, SITE_QUERY);
     var webAppRecentAssets = [];
 
+
     for(var i = 0; i < recentAssets.length; i++) {
         var appRatingRecentAssetsJson = JSON.parse(social.getRating(WEBAPP_TYPE + ':' + recentAssets[i].id));
         if (appRatingRecentAssetsJson) {
@@ -440,7 +445,7 @@ require('/modules/store.js').exec(function (ctx) {
     headerData.isSelfSignUpEnabledForTenant = isSelfSignupEnabledForTenant;
     headerData.domain = tenantDomain;
     headerData.assetType = "webapp";
-
+    log2.info("ssssssssssskooooo");
     caramel.render({
                        title: 'Web Apps | Store',
                        user: user,
